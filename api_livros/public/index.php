@@ -20,6 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS'){
 //importacao de codigos
 require_once '../config/db.php';
 require_once '../app/controller/UsuarioController.php';
+require_once '../app/controller/LivroController.php';
+
 
 
 $database = new Database();
@@ -36,12 +38,20 @@ try {
             echo json_encode([
                 'status'=>'ok - Sistema Online!'
                 ]);
+            break;
             http_response_code(200);
         case 'login':
             if ($method === 'POST') {
                 //chamar Controller do Usuario para realizar Login
                 $usuarioController = new UsuarioController($db);
-            }       
+                $usuarioController->loginUsuario();
+            }
+            break; 
+        case 'livro':
+            if ($method === 'GET') {
+                $livroController = new LivroController($db);
+                $livroController->getLivros();
+            }  
     }
 } catch (Throwable $e) {
     http_response_code(500); //Internal Server Error

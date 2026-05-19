@@ -39,11 +39,11 @@
                     body: JSON.stringify(user)
                 });
                 // JSON converter String
-                const dados = resposta.json();
+                const dados = await resposta.json();
                 if (!resposta.ok) {
                     // checkpoint (teste da reposta)
                     console.log(resposta);
-                    throw new Error(`HTTP: ${resposta.status} - ${resposta.message}`);
+                    throw new Error(`HTTP: ${resposta.status}`);
                 }
                 // retornando a resposta da API (string)
                 return dados;
@@ -66,7 +66,7 @@
                 if (resultado) {
                     sessionStorage.setItem('usuario' , JSON.stringify(resultado));
                     // se login for sucesso, carrega pagina principal da App (homepage)
-                    windows.location.href = "principal.html";
+                    window.location.href = "principal.html";
                 } else {
                     msg.textContent = `Login ou Senha incorreto!`;
                     msg.style.color = "red";

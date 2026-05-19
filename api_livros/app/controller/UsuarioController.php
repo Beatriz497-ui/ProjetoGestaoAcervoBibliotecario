@@ -1,7 +1,7 @@
 <?php
 
-require_once '../model/UsuarioModel.php';
-require_once '../view/UsuarioView.php';
+require_once '../app/model/UsuarioModel.php';
+require_once '../app/view/UsuarioView.php';
 
 class UsuarioController {
     private $modelUsuario;
