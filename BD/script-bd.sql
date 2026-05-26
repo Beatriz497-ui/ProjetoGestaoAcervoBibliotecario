@@ -72,7 +72,13 @@ INSERT INTO Estoque (quantidade_atual, id_livro) VALUES
 (12, 7), 
 (8, 8), 
 (60, 9), 
-(20, 10);
+(20, 10),
+(50, 11), 
+(30, 12), 
+(15, 13), 
+(100, 14), 
+(25, 15);
+
 
 create table Log_movimentacao_estoque
 (

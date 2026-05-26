@@ -14,17 +14,17 @@
     <a href="movimentarEstoque.html"><button>Gestão de Estoque</button></a>
     <span>|||</span>
     <button id="btnLogout">Logout</button>
-    <h3 id="tabela"></h3>
-    
+    <h3 id="mensagem"></h3>
+
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-        const usuario = JSON.parse(sessionStorage.getItem('usuario'));
-        if(!usuario) {
-            window.location.href = "index.html";
-        }
-        const msg = document.getElementById('mensagem');
-        msg.textContent = `Bem vindo ! ${usuario.nome} ${ususario.sobrenome} ! :)`;
-    });
+            const usuario = JSON.parse(sessionStorage.getItem('usuario'));
+            if(!usuario) {
+                window.location.href = "index.html";
+            }
+            const msg = document.getElementById('mensagem');
+            msg.textContent = `Bem vindo -  ${usuario.nome} ${usuario.sobrenome} !😍🍿`;
+        });
     </script>
 </body>
 </html>
