@@ -18,5 +18,19 @@ class LivroController{
         $livros = $this->modelLivro->buscarLivros();
         $this->viewLivro->sendResponse($livros);
     }
+
+    //[SPRINT7] Implementa Filtro Livros
+    public function getLivrosPeloTitulo(){
+        $titulo = $_GET['titulo'];
+        if (isset($titulo)){
+            $data = $this->modelLivro->getLivrosPeloTitulo($titulo);
+            $this->viewLivro->sendResponse($data, 200);
+        }else {
+            $this->viewLivro->sendResponse([
+                'message' => 'Título inválido.'
+            ] , 400);
+        }
+    }
+
 }
 ?>

@@ -50,7 +50,21 @@ try {
                 $livroController = new LivroController($db);
                 $livroController->getLivros();
             }
-            break;              
+            break;
+        
+        //[SPRINT7] Implementa Filtro Livros
+        case 'livroTitulo':
+            if ($method === 'GET'){
+                $livroController = new LivroController($db);
+                $livroController->getLivrosPeloTitulo();
+                exit;
+            }
+            http_response_code(405); //nao reconhece o metodo
+            echo json_encode([
+                'error' => "Método não permitido!"
+            ]);
+            break;
+
     }
 } catch (Throwable $e) {
     http_response_code(500); //Internal Server Error
