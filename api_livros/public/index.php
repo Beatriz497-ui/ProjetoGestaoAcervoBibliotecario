@@ -51,6 +51,12 @@ try {
                 $livroController->getLivros();
             }
             break;
+
+            //SPRINT 8 Implementar Criar Novo Livros
+            if($method === 'POST'){
+                $livroController->createLivro();
+            }
+            break;
         
         //[SPRINT7] Implementa Filtro Livros
         case 'livroTitulo':
