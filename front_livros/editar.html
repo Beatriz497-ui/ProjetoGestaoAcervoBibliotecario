@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Livros</title>
+</head>
+<body>
+    <h1>Atualizar Livros</h1>
+    <form id="formLivro">
+        <label>
+            id: 
+            <input type="number" id="id" required disabled>
+        </label>
+        
+        <label>
+            Titulo:
+            <input type="text" id="titulo" required>
+        </label>
+
+        <label>
+            Descricao:
+            <input type="text" id="descricao" required>
+        </label>
+
+        <label>
+            Autor:
+            <input type="text" id="autor" required>
+        </label>
+
+        <button type="submit">Atualizar Livro</button>
+    </form>
+
+    <p id="mensagem"></p>
+
+    <script>
+        const API_BASE = "http://localhost/ProjetoGestaoAcervoBibliotecario/api_livros";
+
+        async function getLivro(id) {
+            try{
+                const resposta = await fetch(`${API_BASE}/livroId?id=${id}`);
+            }catch(erro){
+                throw erro;
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get("id");
+            const dados = await getLivro(id);
+        })
+    </script>
+</body>
+</html>

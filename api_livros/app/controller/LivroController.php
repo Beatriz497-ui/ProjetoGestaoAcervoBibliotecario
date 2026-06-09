@@ -16,7 +16,7 @@ class LivroController{
         $this->modelLivro = new LivroModel($db);
         //Exibir os Livros para o Front-end
         $this->viewLivro = new LivroView();
-        //Sprint 8 
+        //[SPRINT8] Implementar Criar Livro
         $this->modelEstoque = new EstoqueModel($db);
     }
 
@@ -38,55 +38,56 @@ class LivroController{
         }
     }
 
-    //SPRINT 8 - IMPLEMENTA NOVO LIVRO
+    //[SPRINT8] Implementa Novo Livro
     public function createLivro() {
         $data = json_decode(file_get_contents("php://input"), true);
 
         if ( isset($data['titulo']) && 
-        isset($data['descricao']) && 
-        isset($data['autor']) ){
-
-        $this->db->beginTransaction();
-        $idLivro = $this->modelLivro->createLivro(
-            $data['titulo'],
-            $data['autor'],
-            $data['descricao']
-        );
-
-        try{
-            $this->db->beginTransaction
-        if(!$idLivro){
-            throw new Exeception('Não foi possível ')
-        }
-        $estoqueCriado = $this->modelEstoque->createEstoque($idLivro, 0);
-
-        if(!estoqueCriado){
-            throw new Exception('Não foi possível inserir o Estoque!')
-        }
-
-        $this->db->commit();
-        $this->viewLivro->sendResponse([
-            'message' => 'Livro criado com sucesso!',
-            'id_livro' => $idLivro
-        ]);
-        }catch(Throwable $e){
-            if($this->db->inTransaction()){
-                $this->db->rollback();
-            }
-
-            $this->viewLivro->sendResponse([
-                'message' => 'Erro ao cadastrar Novo Livro',
-                'detalhe' =>$e->getMessage()
-            ], 400);
-
-        }
+            isset($data['descricao']) && 
+            isset($data['autor']) ) {
             
-        }
-    }else{
-        $this->viewLivro->sendResponse(
-            ['message' => 'Dados inválidos'],
-            400
-        )
+            try {
+                $this->db->beginTransaction();
+                $idLivro = $this->modelLivro->createLivro(
+                    $data['titulo'],
+                    $data['autor'],
+                    $data['descricao']
+                );
+
+                if (!$idLivro){
+                    throw new Exception('Nao foi possivel inserir o Livro');
+                }
+                
+                $estoqueCriado = $this->modelEstoque->createEstoque($idLivro, 0);
+
+                if (!$estoqueCriado){
+                    throw new Exception('Nao foi possivel inserir o Estoque inicial do Calori!');
+                }
+
+                $this->db->commit();
+
+                //[Sprint8] inserido codigo HTTP_RESPONSE 201 - Registro criado com sucesso
+                $this->viewLivro->sendResponse([
+                    'message' => 'Livro criado com sucesso!',
+                    'id_livro' => $idLivro
+                ], 201);
+                
+            } catch(Throwable $e){
+                if ($this->db->inTransaction()){
+                    $this->db->rollback();
+                }
+
+                $this->viewLivro->sendResponse([
+                    'message' => 'Erro ao cadastrar Novo Livro',
+                    'detalhe' => $e->getMessage()
+                ], 400);
+            }
+        } else {
+            $this->viewLivro->sendResponse(
+                ['message' => 'Dados invalidos!'],
+                400
+            );
+        } 
     }
 
 }

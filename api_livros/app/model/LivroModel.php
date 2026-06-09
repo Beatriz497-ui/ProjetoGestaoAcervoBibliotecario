@@ -32,20 +32,19 @@ class LivroModel {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    //Sprint 8
+    //[SPRINT8] Implementar novo Livro
     public function createLivro($titulo, $autor, $descricao) {
-        $this->db->prepare("
+        $stmt = $this->db->prepare("
             INSERT INTO Livros (TITULO, AUTOR, DESCRICAO)
-            VALUES(:titulo, :autor, :descricao) 
+            VALUES (:titulo, :autor, :descricao)
         ");
         $stmt->bindValue(':titulo', $titulo);
         $stmt->bindValue(':autor', $autor);
         $stmt->bindValue(':descricao', $descricao);
-        if($stmt->execute()) {
+        if ($stmt->execute()) {
             return $this->db->lastInsertId();
         };
         return false;
-
     }
 }
 

@@ -6,7 +6,7 @@
     <title>Sistema de Gestão de Acervo Bibliotecário</title>
 </head>
 <body>
-    <h1>Projeto Gestao Acervo Bibliotecário</h1>
+    <h1>PROJETO AULA</h1>
     <hr>
     <h2>Faça o Login</h2>
     <form id="FormLogin">
@@ -26,56 +26,55 @@
 
         function getFormData() {
             return {
-                email: document.getElementById('email').value,
-                senha: document.getElementById('senha').value
+            email: document.getElementById('email').value,
+            senha: document.getElementById('senha').value
             };
         }
 
         async function Login(user) {
             try {
-                const resposta = await fetch(`${API_BASE}/login`, {
+                const resposta = await fetch(`${API_BASE}/login` , {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(user)
                 });
-
-                // Verificamos o status antes de tentar converter para JSON
+                // JSON converter String
+                const dados = await resposta.json();
                 if (!resposta.ok) {
+                    // checkpoint (teste da reposta)
                     console.log(resposta);
                     throw new Error(`HTTP: ${resposta.status}`);
                 }
-
-                // Agora que sabemos que a resposta é OK, convertemos
-                const dados = await resposta.json();
+                // retornando a resposta da API (string)
                 return dados;
-                
             } catch (erro) {
-                throw erro; 
+                throw erro; //erro printado na Console
             }
         }
 
         async function handleFormSubmit(event) {
-            event.preventDefault(); 
+            event.preventDefault(); //previnir comportamento padrao Formulario
+            const form = document.getElementById('FormLogin');
             const msg = document.getElementById('mensagem');
             const user = getFormData();
-            
+            // checkpoint - validar coleta de dados do usuario
             console.log(user);
-            
             try {
                 const resultado = await Login(user);
+                //checkpoint
                 console.log(resultado);
-                
                 if (resultado) {
                     sessionStorage.setItem('usuario' , JSON.stringify(resultado));
+                    // se login for sucesso, carrega pagina principal da App (homepage)
                     window.location.href = "principal.html";
                 } else {
                     msg.textContent = `Login ou Senha incorreto!`;
                     msg.style.color = "red";
                 }
             } catch (erro) {
-                msg.textContent = `Erro no Login - ${erro.message}`;
+                msg.textContent = `Erro no Login - ${erro}`;
                 msg.style.color = "red";
             }
         }
