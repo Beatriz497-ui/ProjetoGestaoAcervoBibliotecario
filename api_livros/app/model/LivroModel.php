@@ -32,6 +32,25 @@ class LivroModel {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    //[Sprint9] Implementa Editar
+    public function getLivroPeloId($id){
+        $stmt = $this->db->prepare("
+        SELECT 
+        livros.id_livro,
+        livros.titulo,
+        livros.descricao,
+        livros.autor,
+        estoque.id_estoque,
+        estoque.quantidade_atual as estoque 
+        FROM livros
+        JOIN estoque on estoque.id_livro = livros.id_livro 
+        WHERE Livros.id_livro = :id;
+        ");
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);   
+    }
+
     //[SPRINT8] Implementar novo Livro
     public function createLivro($titulo, $autor, $descricao) {
         $stmt = $this->db->prepare("

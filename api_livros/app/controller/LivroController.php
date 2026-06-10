@@ -38,6 +38,20 @@ class LivroController{
         }
     }
 
+    //[Sprint9] Implementa o Editar Livro
+    public function getLivrosPeloId(){
+        $id = $_GET['id'] ?? null;
+        if (isset($id)){
+            $livro = $this->modelLivro->getLivroPeloId($id);
+            $this->viewLivro->sendResponse($livro, 200);
+        }else{
+            $this->viewLivro->sendResponse(
+                ['message' => 'Id invalido'],
+                400
+            );
+        }
+    }
+
     //[SPRINT8] Implementa Novo Livro
     public function createLivro() {
         $data = json_decode(file_get_contents("php://input"), true);

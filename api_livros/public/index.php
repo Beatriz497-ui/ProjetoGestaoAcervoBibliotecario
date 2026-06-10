@@ -77,6 +77,19 @@ try {
                 'error' => "Método não permitido!"
             ]);
             break;
+        
+        //[Sprint9] Implementa Editar Livro
+        case 'livroId':
+            if ($method === 'GET'){
+                //$livroController = new LivroController($db);
+                $livroController->getLivrosPeloId();
+                exit;
+            }
+            http_response_code(405); //nao reconhece o metodo
+            echo json_encode([
+                'error' => "Método não permitido!"
+            ]);
+            break;
 
     }
 } catch (Throwable $e) {
