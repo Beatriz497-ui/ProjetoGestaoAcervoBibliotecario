@@ -51,10 +51,20 @@ class LivroModel {
         return $stmt->fetch(PDO::FETCH_ASSOC);   
     }
 
-    //SPRINT 9
-
+    //[SPRINT9]
     public function updateLivro($id, $titulo, $autor, $descricao){
-        
+        $stmt = $this->db->prepare("
+            UPDATE Livros 
+            set titulo = :titulo,
+            autor = :autor,
+            descricao = :descricao
+            WHERE id_livro = :id;
+        ");
+        $stmt->bindValue(':id', $id);
+        $stmt->bindValue(':titulo', $titulo);
+        $stmt->bindValue(':autor', $autor);
+        $stmt->bindValue(':descricao', $descricao);    
+        return $stmt->execute();
     }
 
     //[SPRINT8] Implementar novo Livro
@@ -70,6 +80,16 @@ class LivroModel {
             return $this->db->lastInsertId();
         };
         return false;
+    }
+
+    //[SPRINT10] Implementa Excluir
+    public function deleteLivro($id){
+        $stmt = $this->db->prepare("
+            DELETE FROM Livros
+            WHERE id_livro = :id
+        ");
+        $stmt->bindValue(':id', $id);
+        return $stmt->execute();
     }
 }
 

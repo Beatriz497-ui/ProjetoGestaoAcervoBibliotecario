@@ -60,9 +60,14 @@ try {
                 $livroController->createLivro();
                 exit;
             }
-            //SPRINT 9
-            if($method === 'PUT'){
+            //[Sprint9]
+            if ($method === 'PUT'){
                 $livroController->updateLivro();
+                exit;
+            }
+            //[Sprint10] Implementa Excluir
+            if ($method === 'DELETE'){
+                $livroController->deleteLivro();
                 exit;
             }
             //[Sprint8] inserirdo mensagem de metodo nao reconhecido

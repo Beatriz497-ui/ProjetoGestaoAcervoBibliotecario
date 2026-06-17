@@ -63,7 +63,7 @@
                 id: document.getElementById('id').value,
                 titulo: document.getElementById('titulo').value,
                 autor: document.getElementById('autor').value,
-                descricao: document.getElementById('descricao').value 
+                descricao: document.getElementById('descricao').value
             }
         }
 
@@ -75,7 +75,7 @@
                     body: JSON.stringify(livro)
                 });
                 const dados = await resposta.json();
-                if(!resposta.ok){
+                if (!resposta.ok){
                     throw new Error(`HTTP: ${resposta.status} - ${dados.message}`);
                 }
                 return dados;
@@ -91,14 +91,13 @@
 
             const livro = await getLivroFormData();
 
-            try{
+            try {
                 const resultado = await atualizarLivro(livro);
-                msg.textContent = "Livro Atualizado Com Sucesso";
+                msg.textContent = "Livro atualizado com sucesso!";
                 msg.style.color = "green";
             }catch(erro){
                 msg.textContent = `Erro ao atualizar o Livro: ${erro}`;
                 msg.style.color = "red";
-
             }
         }
 
@@ -108,7 +107,8 @@
             const id = params.get("id");
             const dados = await getLivro(id);
             preencherForm(dados);
-            //Ação do botão atualizar
+
+            //acao do botao Atualizar
             document.getElementById('formLivro').addEventListener('submit', enviarForm);
         })
     </script>

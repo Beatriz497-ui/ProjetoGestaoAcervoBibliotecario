@@ -17,13 +17,21 @@
     <h3 id="mensagem"></h3>
 
     <script>
+        function logout(){
+            sessionStorage.clear();
+            window.location.href = "index.html";
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
             const usuario = JSON.parse(sessionStorage.getItem('usuario'));
             if(!usuario) {
                 window.location.href = "index.html";
             }
             const msg = document.getElementById('mensagem');
-            msg.textContent = `Bem vindo -  ${usuario.nome} ${usuario.sobrenome} !😍🍿`;
+            msg.textContent = `Bem vindo -  ${usuario.nome} ${usuario.sobrenome} !`;
+
+            //Acao do Botao Logout
+            document.getElementById('btnLogout').addEventListener('click',logout);
         });
     </script>
 </body>
